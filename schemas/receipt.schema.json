@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/LeeJunyeolKor/my-agent-stack/schemas/receipt.schema.json",
+  "title": "My Agent Stack 설치 영수증",
+  "type": "object",
+  "required": ["schemaVersion", "stackVersion", "installed", "skipped"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "stackVersion": {"type": "string"},
+    "installed": {"type": "array"},
+    "skipped": {"type": "array"}
+  },
+  "additionalProperties": false
+}

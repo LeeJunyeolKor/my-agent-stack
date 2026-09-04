@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/LeeJunyeolKor/my-agent-stack/schemas/component.schema.json",
+  "title": "My Agent Stack 구성 요소",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "kind",
+    "id",
+    "name",
+    "version",
+    "summary",
+    "maturity",
+    "visibility",
+    "provenance",
+    "targets",
+    "capabilities",
+    "permissions",
+    "entrypoint",
+    "portfolio"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "kind": {"enum": ["skill", "automation"]},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "name": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$"},
+    "summary": {"type": "string", "minLength": 1},
+    "maturity": {"enum": ["prototype", "recipe", "used", "verified"]},
+    "visibility": {"enum": ["public", "sanitized-case-study", "private", "needs-review"]},
+    "entrypoint": {"type": "string", "pattern": "^[^/]+\\.(?:md|MD)$"},
+    "targets": {
+      "type": "object",
+      "additionalProperties": {"enum": ["verified", "unverified", "unsupported"]}
+    },
+    "capabilities": {
+      "type": "object",
+      "required": ["required", "optional"],
+      "properties": {
+        "required": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "optional": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["origin", "sanitized", "license"],
+      "properties": {
+        "origin": {"enum": ["original", "third-party", "generalized"]},
+        "sanitized": {"type": "boolean"},
+        "license": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

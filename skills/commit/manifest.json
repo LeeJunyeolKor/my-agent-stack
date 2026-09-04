@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "skill",
+  "id": "commit",
+  "name": "커밋",
+  "version": "0.1.0",
+  "summary": "저장소 훅을 우회하지 않고 검증된 변경을 리뷰 가능한 커밋으로 만든다.",
+  "maturity": "prototype",
+  "visibility": "public",
+  "provenance": {"origin": "generalized", "sanitized": true, "license": "MIT"},
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {"required": [], "optional": ["scm.diff.read", "issue.read"]},
+  "permissions": {
+    "filesystem": ["workspace.read", "git-index.write"],
+    "network": [],
+    "secrets": [],
+    "mutations": ["git-commit"]
+  },
+  "entrypoint": "SKILL.md",
+  "portfolio": {
+    "problem": "크거나 추측에 기반한 커밋은 리뷰와 롤백을 어렵게 만든다.",
+    "demonstrates": ["diff 기반 커밋 분리", "저장소 훅을 고려한 검증"]
+  }
+}

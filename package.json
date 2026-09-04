@@ -1,0 +1,20 @@
+{
+  "name": "my-agent-stack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "개인 에이전트 스킬과 자동화 레시피를 선택해 설치하는 이식 가능한 카탈로그.",
+  "type": "module",
+  "bin": {
+    "my-agent-stack": "./bin/my-agent-stack.js"
+  },
+  "scripts": {
+    "stack": "node ./bin/my-agent-stack.js",
+    "check": "node ./scripts/check.mjs",
+    "test": "node --test",
+    "verify": "npm run check && npm test && node ./bin/my-agent-stack.js validate && node ./bin/my-agent-stack.js doctor"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

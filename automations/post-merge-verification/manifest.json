@@ -1,0 +1,51 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "automation",
+  "id": "post-merge-verification",
+  "name": "병합 후 검증",
+  "version": "0.1.0",
+  "summary": "배포 성공을 가정하지 않고 병합된 기준선에서 승인된 변경을 다시 검증한다.",
+  "maturity": "recipe",
+  "visibility": "public",
+  "provenance": {
+    "origin": "original",
+    "sanitized": true,
+    "license": "MIT"
+  },
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {
+    "required": ["scm.pull-request.read"],
+    "optional": ["scm.diff.read"]
+  },
+  "permissions": {
+    "filesystem": ["workspace.read"],
+    "network": ["selected-provider.read"],
+    "secrets": [],
+    "mutations": []
+  },
+  "entrypoint": "AUTOMATION.md",
+  "trigger": {
+    "supported": ["manual", "event"],
+    "default": "manual"
+  },
+  "activation": {
+    "defaultEnabled": false,
+    "requiresConfirmation": true
+  },
+  "safeguards": {
+    "approvalBeforeMutation": true,
+    "verificationAfterMutation": true
+  },
+  "portfolio": {
+    "problem": "PR 검증 결과가 병합 또는 배포 동작이 올바르다는 근거로 재사용되는 경우가 많다.",
+    "demonstrates": ["기준선을 고려한 검증", "병합과 배포 상태 분리"]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "automation",
+  "id": "issue-status-sync",
+  "name": "이슈 상태 동기화",
+  "version": "0.1.0",
+  "summary": "이슈 상태를 소스 제어 근거와 비교하고 허용 가능한 상태 전환을 제안한다.",
+  "maturity": "recipe",
+  "visibility": "public",
+  "provenance": {
+    "origin": "original",
+    "sanitized": true,
+    "license": "MIT"
+  },
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {
+    "required": [
+      "scm.branch.read",
+      "issue.read",
+      "issue.status.write"
+    ],
+    "optional": ["scm.pull-request.read"]
+  },
+  "permissions": {
+    "filesystem": ["workspace.read"],
+    "network": ["selected-provider.read", "selected-provider.write"],
+    "secrets": [],
+    "mutations": ["issue-status-update"]
+  },
+  "entrypoint": "AUTOMATION.md",
+  "trigger": {
+    "supported": ["manual"],
+    "default": "manual"
+  },
+  "activation": {
+    "defaultEnabled": false,
+    "requiresConfirmation": true
+  },
+  "safeguards": {
+    "approvalBeforeMutation": true,
+    "verificationAfterMutation": true
+  },
+  "portfolio": {
+    "problem": "이슈 상태는 이를 뒷받침해야 할 브랜치 및 PR 상태와 어긋나기 쉽다.",
+    "demonstrates": ["프로바이더에 종속되지 않는 상태 정책", "변경 전 미리보기"]
+  }
+}

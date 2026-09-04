@@ -1,0 +1,19 @@
+{
+  "$schema": "../../schemas/profile.schema.json",
+  "schemaVersion": 1,
+  "stackVersion": "0.1.0",
+  "scope": "project",
+  "agents": ["codex"],
+  "providers": {
+    "scm": "local-git",
+    "issues": "none",
+    "messaging": "none"
+  },
+  "selection": {
+    "skills": [
+      "evidence-first-delivery",
+      "portable-stack-audit"
+    ],
+    "automations": ["daily-work-summary"]
+  }
+}

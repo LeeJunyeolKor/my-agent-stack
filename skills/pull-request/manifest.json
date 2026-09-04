@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "skill",
+  "id": "pull-request",
+  "name": "PR 작성",
+  "version": "0.1.0",
+  "summary": "현재 저장소 증거를 바탕으로 PR을 조회하거나 초안 작성, 생성, 갱신한다.",
+  "maturity": "prototype",
+  "visibility": "public",
+  "provenance": {"origin": "generalized", "sanitized": true, "license": "MIT"},
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {"required": [], "optional": ["scm.diff.read", "scm.pull-request.read", "issue.read"]},
+  "permissions": {
+    "filesystem": ["workspace.read"],
+    "network": ["selected-provider.read"],
+    "secrets": [],
+    "mutations": ["pull-request-create", "pull-request-update"]
+  },
+  "entrypoint": "SKILL.md",
+  "portfolio": {
+    "problem": "PR 설명이 실제 diff, 인터페이스 변경, 검증 경계와 어긋나기 쉽다.",
+    "demonstrates": ["목표 중심의 변경 설명", "명시적인 리뷰 범위"]
+  }
+}

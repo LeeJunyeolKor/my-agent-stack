@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "skill",
+  "id": "review-comment",
+  "name": "리뷰 코멘트",
+  "version": "0.1.0",
+  "summary": "저장소 계약을 기준으로 변경을 검토하고 구체적 위험과 가장 작은 유효 수정을 제시한다.",
+  "maturity": "prototype",
+  "visibility": "public",
+  "provenance": {"origin": "generalized", "sanitized": true, "license": "MIT"},
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {"required": ["scm.diff.read"], "optional": ["scm.pull-request.read", "issue.read"]},
+  "permissions": {
+    "filesystem": ["workspace.read"],
+    "network": ["selected-provider.read"],
+    "secrets": [],
+    "mutations": ["pull-request-comment"]
+  },
+  "entrypoint": "SKILL.md",
+  "portfolio": {
+    "problem": "리뷰 피드백에 검증된 결함, 선호, 근거 없는 추정이 섞이기 쉽다.",
+    "demonstrates": ["계약에서 위험으로 이어지는 추론", "실행 가능한 최소 수정"]
+  }
+}

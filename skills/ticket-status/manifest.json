@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "skill",
+  "id": "ticket-status",
+  "name": "티켓 상태",
+  "version": "0.1.0",
+  "summary": "상태 전환을 제안하기 전에 개인 이슈 상태를 현재 브랜치와 PR 증거에 대조한다.",
+  "maturity": "prototype",
+  "visibility": "public",
+  "provenance": {"origin": "generalized", "sanitized": true, "license": "MIT"},
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {
+    "required": ["scm.branch.read", "issue.read"],
+    "optional": ["scm.pull-request.read", "issue.status.write"]
+  },
+  "permissions": {
+    "filesystem": ["workspace.read"],
+    "network": ["selected-provider.read", "selected-provider.write"],
+    "secrets": [],
+    "mutations": ["issue-status-update"]
+  },
+  "entrypoint": "SKILL.md",
+  "portfolio": {
+    "problem": "개인 이슈 상태가 이를 뒷받침해야 할 소스 제어 증거와 어긋나기 쉽다.",
+    "demonstrates": ["프로바이더 중립적인 상태 전환 판단", "티켓별 승인"]
+  }
+}

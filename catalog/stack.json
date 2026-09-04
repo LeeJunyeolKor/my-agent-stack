@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "id": "my-agent-stack",
+  "name": "My Agent Stack",
+  "version": "0.1.0",
+  "description": "개인 에이전트 스킬과 자동화 레시피를 위한 이식 가능한 포트폴리오이자 선택형 설치 도구."
+}

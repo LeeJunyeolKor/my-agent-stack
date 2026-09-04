@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "groups": [
+    {
+      "id": "scm",
+      "name": "소스 제어",
+      "providers": [
+        {
+          "id": "local-git",
+          "name": "Local Git",
+          "implementation": "profile-only",
+          "capabilities": [
+            "scm.branch.read",
+            "scm.diff.read",
+            "scm.history.read"
+          ]
+        },
+        {
+          "id": "github",
+          "name": "GitHub",
+          "implementation": "profile-only",
+          "capabilities": [
+            "scm.branch.read",
+            "scm.diff.read",
+            "scm.history.read",
+            "scm.pull-request.read"
+          ]
+        },
+        {
+          "id": "gitlab",
+          "name": "GitLab",
+          "implementation": "profile-only",
+          "capabilities": [
+            "scm.branch.read",
+            "scm.diff.read",
+            "scm.history.read",
+            "scm.pull-request.read"
+          ]
+        },
+        {
+          "id": "bitbucket",
+          "name": "Bitbucket",
+          "implementation": "profile-only",
+          "capabilities": [
+            "scm.branch.read",
+            "scm.diff.read",
+            "scm.history.read",
+            "scm.pull-request.read"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "issues",
+      "name": "이슈 추적",
+      "providers": [
+        {
+          "id": "jira",
+          "name": "Jira",
+          "implementation": "profile-only",
+          "capabilities": ["issue.read", "issue.status.write"]
+        },
+        {
+          "id": "linear",
+          "name": "Linear",
+          "implementation": "profile-only",
+          "capabilities": ["issue.read", "issue.status.write"]
+        },
+        {
+          "id": "github-issues",
+          "name": "GitHub Issues",
+          "implementation": "profile-only",
+          "capabilities": ["issue.read", "issue.status.write"]
+        },
+        {
+          "id": "gitlab-issues",
+          "name": "GitLab Issues",
+          "implementation": "profile-only",
+          "capabilities": ["issue.read", "issue.status.write"]
+        },
+        {
+          "id": "notion",
+          "name": "Notion",
+          "implementation": "profile-only",
+          "capabilities": ["issue.read", "issue.status.write"]
+        }
+      ]
+    },
+    {
+      "id": "messaging",
+      "name": "메시징",
+      "providers": [
+        {
+          "id": "slack",
+          "name": "Slack",
+          "implementation": "profile-only",
+          "capabilities": ["messaging.read", "messaging.send"]
+        },
+        {
+          "id": "teams",
+          "name": "Microsoft Teams",
+          "implementation": "profile-only",
+          "capabilities": ["messaging.read", "messaging.send"]
+        }
+      ]
+    }
+  ]
+}

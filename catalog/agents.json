@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "agents": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "status": "supported",
+      "skillPaths": {
+        "project": ".agents/skills",
+        "user": ".agents/skills"
+      },
+      "documentation": "https://learn.chatgpt.com/docs/build-skills"
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "status": "supported",
+      "skillPaths": {
+        "project": ".claude/skills",
+        "user": ".claude/skills"
+      },
+      "documentation": "https://code.claude.com/docs/en/slash-commands"
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "status": "supported",
+      "skillPaths": {
+        "project": ".agents/skills",
+        "user": ".agents/skills"
+      },
+      "documentation": "https://prod.cursor.com/docs/skills"
+    },
+    {
+      "id": "gemini-cli",
+      "name": "Gemini CLI",
+      "status": "supported",
+      "skillPaths": {
+        "project": ".agents/skills",
+        "user": ".agents/skills"
+      },
+      "documentation": "https://geminicli.com/docs/cli/skills/"
+    },
+    {
+      "id": "antigravity",
+      "name": "Antigravity IDE",
+      "status": "supported",
+      "skillPaths": {
+        "project": ".agents/skills",
+        "user": ".gemini/config/skills"
+      },
+      "documentation": "https://antigravity.google/docs/skills"
+    },
+    {
+      "id": "antigravity-cli",
+      "name": "Antigravity CLI",
+      "status": "supported",
+      "skillPaths": {
+        "project": ".agents/skills",
+        "user": ".gemini/antigravity-cli/skills"
+      },
+      "documentation": "https://antigravity.google/docs/cli/plugins/"
+    }
+  ]
+}

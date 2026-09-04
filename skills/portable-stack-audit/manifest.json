@@ -1,0 +1,43 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "skill",
+  "id": "portable-stack-audit",
+  "name": "이식 가능한 스택 점검",
+  "version": "0.1.0",
+  "summary": "설치된 스킬과 자동화를 조사하고 공개 가능한 이식형 스택에 안전하게 포함할 수 있는 항목을 분류한다.",
+  "maturity": "prototype",
+  "visibility": "public",
+  "provenance": {
+    "origin": "original",
+    "sanitized": true,
+    "license": "MIT"
+  },
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {
+    "required": [],
+    "optional": []
+  },
+  "permissions": {
+    "filesystem": ["agent-config.read"],
+    "network": [],
+    "secrets": [],
+    "mutations": []
+  },
+  "entrypoint": "SKILL.md",
+  "portfolio": {
+    "problem": "설치된 에이전트 확장에는 자체 제작물, 서드파티 패키지, 조직 비공개 자료가 섞여 있다.",
+    "demonstrates": [
+      "출처 분류",
+      "공개 안전성",
+      "에이전트 간 설치 목록 조사"
+    ]
+  }
+}

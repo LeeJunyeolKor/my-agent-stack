@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "skill",
+  "id": "terminology-review",
+  "name": "용어 검토",
+  "version": "0.1.0",
+  "summary": "코드 식별자와 합의된 도메인 언어를 유지하면서 한국어 기술 용어를 일관되게 정리한다.",
+  "maturity": "prototype",
+  "visibility": "public",
+  "provenance": {"origin": "generalized", "sanitized": true, "license": "MIT"},
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {"required": [], "optional": []},
+  "permissions": {
+    "filesystem": ["workspace.read", "workspace.write"],
+    "network": [],
+    "secrets": [],
+    "mutations": ["documentation-update"]
+  },
+  "entrypoint": "SKILL.md",
+  "portfolio": {
+    "problem": "번역 표현과 영어 표현이 섞이면 한국어 기술 문서를 빠르게 읽기 어렵다.",
+    "demonstrates": ["맥락을 고려한 문장 편집", "도메인 용어 보존"]
+  }
+}

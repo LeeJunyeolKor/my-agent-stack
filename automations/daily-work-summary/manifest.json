@@ -1,0 +1,51 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "automation",
+  "id": "daily-work-summary",
+  "name": "일일 작업 요약",
+  "version": "0.1.0",
+  "summary": "확인 가능한 작업 활동을 바탕으로 근거가 연결된 간결한 일일 요약을 작성한다.",
+  "maturity": "recipe",
+  "visibility": "public",
+  "provenance": {
+    "origin": "original",
+    "sanitized": true,
+    "license": "MIT"
+  },
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {
+    "required": ["scm.history.read"],
+    "optional": ["issue.read", "messaging.send"]
+  },
+  "permissions": {
+    "filesystem": ["workspace.read"],
+    "network": ["selected-provider.read"],
+    "secrets": [],
+    "mutations": []
+  },
+  "entrypoint": "AUTOMATION.md",
+  "trigger": {
+    "supported": ["manual", "scheduled"],
+    "default": "manual"
+  },
+  "activation": {
+    "defaultEnabled": false,
+    "requiresConfirmation": true
+  },
+  "safeguards": {
+    "approvalBeforeMutation": true,
+    "verificationAfterMutation": true
+  },
+  "portfolio": {
+    "problem": "일일 상태 보고서는 장황해지거나 현재 근거로 뒷받침되지 않는 작업까지 과장하기 쉽다.",
+    "demonstrates": ["근거가 연결된 보고", "선택적 프로바이더 장애 시 축소 동작"]
+  }
+}

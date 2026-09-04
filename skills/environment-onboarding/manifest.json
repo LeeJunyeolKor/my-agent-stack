@@ -1,0 +1,43 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "skill",
+  "id": "environment-onboarding",
+  "name": "환경 온보딩",
+  "version": "0.1.0",
+  "summary": "조직의 비공개 정보를 옮기지 않고 이식 가능한 스택을 새 회사나 프로젝트에 맞춘다.",
+  "maturity": "prototype",
+  "visibility": "public",
+  "provenance": {
+    "origin": "original",
+    "sanitized": true,
+    "license": "MIT"
+  },
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {
+    "required": [],
+    "optional": []
+  },
+  "permissions": {
+    "filesystem": ["workspace.read", "workspace.write"],
+    "network": [],
+    "secrets": [],
+    "mutations": ["local-agent-configuration"]
+  },
+  "entrypoint": "SKILL.md",
+  "portfolio": {
+    "problem": "개인 에이전트 워크플로가 한 회사의 도구와 용어에 종속되기 쉽다.",
+    "demonstrates": [
+      "기능 기반 설정",
+      "개인정보를 고려한 이식",
+      "설치 전 미리보기"
+    ]
+  }
+}

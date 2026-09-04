@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/LeeJunyeolKor/my-agent-stack/schemas/profile.schema.json",
+  "title": "My Agent Stack 설치 프로필",
+  "type": "object",
+  "required": ["schemaVersion", "stackVersion", "scope", "agents", "providers", "selection"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "stackVersion": {"type": "string"},
+    "scope": {"enum": ["project", "user"]},
+    "agents": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "providers": {"type": "object", "additionalProperties": {"type": "string"}},
+    "selection": {
+      "type": "object",
+      "required": ["skills", "automations"],
+      "properties": {
+        "skills": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "automations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    }
+  },
+  "additionalProperties": false
+}

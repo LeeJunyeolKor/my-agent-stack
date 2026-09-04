@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/profile.schema.json",
+  "schemaVersion": 1,
+  "stackVersion": "0.1.0",
+  "scope": "project",
+  "agents": ["codex", "cursor"],
+  "providers": {
+    "scm": "github",
+    "issues": "none",
+    "messaging": "none"
+  },
+  "selection": {
+    "skills": [
+      "evidence-first-delivery",
+      "environment-onboarding"
+    ],
+    "automations": [
+      "daily-work-summary",
+      "issue-status-sync"
+    ]
+  }
+}
