@@ -74,6 +74,8 @@ CLI는 카탈로그를 불러와 검증하고, 필요한 기능을 확인하고,
 
 ## Codex 패키징과 공통 지침
 
+코드 설명의 HTML 자산은 `skills/code-explainer/assets/explainer.html` 한 곳에서 관리한다. 선택형 설치와 플러그인 빌드는 같은 바이트를 복사한다. 패키지 허용 목록은 Markdown 참조와 이 HTML 경로만 허용하며 임의 스크립트·자산 폴더 전체를 허용하지 않는다. HTML의 목차 앵커와 상대 파일 참조도 패키지 검사에 포함한다.
+
 `src/plugin.js`는 기존 카탈로그를 읽어 허용 파일만 결정론적으로 패키징하고 `src/installer.js`의 충돌·체크섬 검증을 재사용한다. `dist/codex`는 원본이 아니며, 포함 파일·내용·상대 참조와 안전성 검사를 통과해야 사용할 수 있다. 빌드 계획만으로 실제 Codex 설치를 수행하지 않는다.
 
 `manifest.json`의 dependencies는 공통 지침의 설치 의존성이다. 순환·없는 대상·프로바이더가 필요한 공유 지침은 거부한다. 이름 호환 매핑은 `catalog/stack.json`이 소유한다. 자세한 결정은 [ADR 0002](adr/0002-codex-plugin-from-catalog.md)를 따른다.

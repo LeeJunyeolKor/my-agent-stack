@@ -1,0 +1,49 @@
+{
+  "$schema": "../../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "kind": "skill",
+  "id": "code-explainer",
+  "name": "코드 동작 설명",
+  "version": "0.3.0",
+  "summary": "실제 구현의 호출·상태·실패 흐름을 근거와 함께 설명하고 HTML 문서로 정리한다.",
+  "maturity": "prototype",
+  "visibility": "public",
+  "provenance": {
+    "origin": "generalized",
+    "sanitized": true,
+    "license": "MIT"
+  },
+  "targets": {
+    "codex": "unverified",
+    "claude-code": "unverified",
+    "cursor": "unverified",
+    "gemini-cli": "unverified",
+    "antigravity": "unverified",
+    "antigravity-cli": "unverified"
+  },
+  "capabilities": {
+    "required": [],
+    "optional": []
+  },
+  "permissions": {
+    "filesystem": [
+      "workspace.read",
+      "workspace.write"
+    ],
+    "network": [],
+    "secrets": [],
+    "mutations": []
+  },
+  "entrypoint": "SKILL.md",
+  "portfolio": {
+    "problem": "처음 보는 코드의 중간 호출과 실행 조건이 설명에서 빠지는 문제",
+    "demonstrates": [
+      "실제 코드 흐름 추적",
+      "구현 사실과 추론 구분",
+      "근거를 연결한 HTML 설명"
+    ]
+  },
+  "dependencies": [
+    "technical-writing"
+  ]
+}

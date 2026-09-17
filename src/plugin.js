@@ -34,7 +34,16 @@ export function validatePackageReferences(contents) {
       if (manifest.$schema) references.push(manifest.$schema);
       if (manifest.entrypoint) references.push(manifest.entrypoint);
     }
+    if (file.endsWith(".html")) {
+      for (const match of content.matchAll(/\b(?:href|src)\s*=\s*["']([^"']+)["']/gi)) references.push(match[1]);
+    }
     for (const reference of references) {
+      if (file.endsWith(".html") && reference === "data:,") continue;
+      if (file.endsWith(".html") && reference.startsWith("#")) {
+        const ids = [...content.matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)].map((match) => match[1]);
+        if (!ids.includes(decodeURIComponent(reference.slice(1)))) throw new Error(`Broken HTML anchor reference: ${file} -> ${reference}`);
+        continue;
+      }
       if (/^(?:https?:|mailto:|#)/.test(reference)) continue;
       const target = decodeURIComponent(reference.split("#")[0]);
       const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(file), target));
@@ -50,7 +59,8 @@ export async function createPluginPlan(catalog) {
   for (const skill of catalog.skills) {
     if (skill.targets.codex === "unsupported") throw new Error(`Skill is unsupported by Codex: ${skill.id}`);
     for (const file of await collectFiles(skill.sourceDirectory)) {
-      if (!/^(?:SKILL\.md|manifest\.json|references\/[a-zA-Z0-9_./-]+\.md)$/.test(file.path)) {
+      const explanationAsset = skill.id === "code-explainer" && file.path === "assets/explainer.html";
+      if (!explanationAsset && !/^(?:SKILL\.md|manifest\.json|references\/[a-zA-Z0-9_./-]+\.md)$/.test(file.path)) {
         throw new Error(`File is not in the skills-only package allowlist: ${skill.id}/${file.path}`);
       }
       contents.set(`${PLUGIN}/skills/${skill.id}/${file.path}`, await regularSource(catalog.root, `skills/${skill.id}/${file.path}`));
