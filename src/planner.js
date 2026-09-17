@@ -77,7 +77,18 @@ export async function createPlan(catalog, input) {
   const agentIds = unique(input.agents);
   if (agentIds.length === 0) throw new PlanError("Select at least one agent");
   const agents = agentIds.map((id) => byId(catalog.agents, id, "agent"));
-  const skills = unique(input.skills).map((id) => byId(catalog.skills, id, "skill"));
+  const aliasWarnings = [];
+  const selected = new Map();
+  function selectSkill(id) {
+    const canonical = catalog.stack.skillAliases?.[id] ?? id;
+    if (canonical !== id) aliasWarnings.push(`${id} was renamed to ${canonical}; remove the old installation only after reviewing it.`);
+    if (selected.has(canonical)) return;
+    const skill = byId(catalog.skills, canonical, "skill");
+    selected.set(canonical, skill);
+    for (const dependency of skill.dependencies ?? []) selectSkill(dependency);
+  }
+  unique(input.skills).forEach(selectSkill);
+  const skills = [...selected.values()];
   const automations = unique(input.automations).map((id) => byId(catalog.automations, id, "automation"));
   if (skills.length === 0 && automations.length === 0) throw new PlanError("Select at least one skill or automation");
 
@@ -86,7 +97,7 @@ export async function createPlan(catalog, input) {
   const evaluatedAutomations = automations.map((component) => evaluateComponent(component, agents, providerResolution.capabilities));
   const evaluations = [...evaluatedSkills, ...evaluatedAutomations];
   const operationsByDestination = new Map();
-  const warnings = [...providerResolution.warnings];
+  const warnings = [...providerResolution.warnings, ...aliasWarnings];
 
   for (const evaluation of evaluations) {
     if (evaluation.status === "skipped") continue;

@@ -6,6 +6,7 @@ import { formatCatalog, formatPlan } from "./format.js";
 import { applyPlan } from "./installer.js";
 import { createPlan } from "./planner.js";
 import { scanPublicSafety } from "./safety.js";
+import { buildPlugin, createPluginPlan, publicPluginPlan, verifyPlugin } from "./plugin.js";
 import { runWizard } from "./wizard.js";
 
 const HELP = `My Agent Stack
@@ -19,6 +20,8 @@ Usage:
   my-agent-stack install --agents <ids> --skills <ids> [options] [--yes]
   my-agent-stack validate
   my-agent-stack doctor
+  my-agent-stack plugin-build [--dry-run | --yes] [--force] [--json]
+  my-agent-stack plugin-verify
 
 Options:
   --agents codex,claude-code
@@ -108,6 +111,25 @@ export async function run(argv, io = console) {
 
   if (parsed.options.help || new Set(["help", "--help", "-h"]).has(parsed.command)) {
     write(HELP.trimEnd());
+    return 0;
+  }
+
+  if (new Set(["plugin-build", "plugin-verify"]).has(parsed.command)) {
+    const allowed = new Set(["yes", "force", "dry-run", "json"]);
+    if (parsed.positionals.length || Object.keys(parsed.options).some((key) => !allowed.has(key))) {
+      throw new Error("Plugin commands build the complete catalog at dist/codex; selection and target options are not supported");
+    }
+    const plan = await createPluginPlan(catalog);
+    if (parsed.command === "plugin-verify") {
+      write(await verifyPlugin(plan));
+      return 0;
+    }
+    if (parsed.options["dry-run"] || !parsed.options.yes) {
+      write({ plan: publicPluginPlan(plan), applied: false });
+      return 0;
+    }
+    const result = await buildPlugin(plan, { force: parsed.options.force === true });
+    write({ plan: publicPluginPlan(plan), result });
     return 0;
   }
 

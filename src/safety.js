@@ -11,7 +11,7 @@ const DEFAULT_PATTERNS = [
 ];
 
 const IGNORED_DIRECTORIES = new Set([".git", "node_modules", "coverage", ".my-agent-stack"]);
-const IGNORED_FILES = new Set([".my-agent-stack-denylist"]);
+const IGNORED_FILES = new Set([".git", ".my-agent-stack-denylist"]);
 
 async function filesUnder(root) {
   const files = [];
@@ -39,8 +39,8 @@ export async function scanPublicSafety(root, extraMarkers = []) {
     let content;
     try {
       content = await readFile(file, "utf8");
-    } catch {
-      continue;
+    } catch (error) {
+      throw new Error(`Safety scan could not read ${path.relative(root, file)}: ${error.code ?? "read failed"}`);
     }
     const lines = content.split(/\r?\n/);
     for (let index = 0; index < lines.length; index += 1) {

@@ -1,0 +1,23 @@
+{
+  "name": "my-agent-stack",
+  "version": "0.2.0",
+  "description": "근거 기반 개발·리뷰·문서 작성 스킬 모음",
+  "author": {
+    "name": "LeeJunyeolKor"
+  },
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "My Agent Stack",
+    "shortDescription": "변경을 검토하고 근거 있는 결과를 작성합니다.",
+    "longDescription": "커밋, PR, 코드 리뷰와 보고서 작성을 돕는 개인용 스킬입니다. 외부 연결이나 자동 실행은 포함하지 않습니다.",
+    "developerName": "LeeJunyeolKor",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "커밋 메시지만 작성해줘",
+      "코드 변경을 리뷰만 해줘",
+      "검증 결과 보고서를 작성해줘"
+    ]
+  }
+}

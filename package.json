@@ -1,6 +1,6 @@
 {
   "name": "my-agent-stack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "개인 에이전트 스킬과 자동화 레시피를 선택해 설치하는 이식 가능한 카탈로그.",
   "type": "module",
@@ -11,7 +11,10 @@
     "stack": "node ./bin/my-agent-stack.js",
     "check": "node ./scripts/check.mjs",
     "test": "node --test",
-    "verify": "npm run check && npm test && node ./bin/my-agent-stack.js validate && node ./bin/my-agent-stack.js doctor"
+    "verify": "npm run check && npm test && node ./bin/my-agent-stack.js validate && node ./bin/my-agent-stack.js doctor",
+    "plugin:plan": "node ./bin/my-agent-stack.js plugin-build --dry-run",
+    "plugin:build": "node ./bin/my-agent-stack.js plugin-build --yes",
+    "plugin:verify": "node ./bin/my-agent-stack.js plugin-verify"
   },
   "engines": {
     "node": ">=20"

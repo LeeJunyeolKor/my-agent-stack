@@ -158,6 +158,30 @@ export async function loadCatalog(root = repositoryRoot) {
     }
   }
 
+  const skillIds = new Set(skills.map((skill) => skill.id));
+  for (const [alias, target] of Object.entries(stack.skillAliases ?? {})) {
+    assertId(alias, "skill alias");
+    assert(!skillIds.has(alias) && skillIds.has(target), `Invalid skill alias: ${alias}`);
+  }
+  const visited = new Set();
+  function visit(skill, active = new Set()) {
+    assert(!active.has(skill.id), `Cyclic skill dependency: ${skill.id}`);
+    if (visited.has(skill.id)) return;
+    assert(Array.isArray(skill.dependencies ?? []), `${skill.id} dependencies must be an array`);
+    for (const id of skill.dependencies ?? []) {
+      const dependency = skills.find((candidate) => candidate.id === id);
+      assert(dependency, `${skill.id} references unknown dependency: ${id}`);
+      // Shared instructions must remain installable wherever their consumer is supported.
+      assert(dependency.capabilities.required.length === 0, `${id} shared dependency requires a provider`);
+      for (const [target, state] of Object.entries(skill.targets)) {
+        assert(state === "unsupported" || dependency.targets[target] !== "unsupported", `${id} is unavailable for ${target}`);
+      }
+      visit(dependency, new Set([...active, skill.id]));
+    }
+    visited.add(skill.id);
+  }
+  skills.forEach((skill) => visit(skill));
+
   return {
     root,
     stack,
