@@ -8,6 +8,7 @@ test("catalog loads validated components and documented agents", async () => {
 
   assert.equal(catalog.stack.version, "0.1.0");
   assert.deepEqual(catalog.skills.map((skill) => skill.id), [
+    "code-explainer",
     "code-review",
     "commit",
     "environment-onboarding",

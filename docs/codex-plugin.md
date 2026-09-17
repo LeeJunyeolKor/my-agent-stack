@@ -34,6 +34,8 @@ codex plugin list
 
 ## 업데이트
 
+0.3에는 `code-explainer`와 HTML 템플릿이 포함된다. `$my-agent-stack:code-explainer 이 코드의 호출 흐름을 설명해줘`로 요청한다. HTML 파일을 원하면 저장할 산출물을 명시한다. 템플릿과 형식 지침은 스킬과 함께 빌드되므로 별도 다운로드가 필요 없다.
+
 먼저 스킬 원본을 수정하고 검증한다. `plugin-build --dry-run`으로 대상과 포함 파일을 검토한 다음 산출물을 교체한다.
 
 ```bash
@@ -43,7 +45,9 @@ npm run plugin:verify
 codex plugin add my-agent-stack@my-agent-stack-local
 ```
 
-내용 해시가 버전의 build metadata에 들어가므로 같은 원본은 같은 패키지를 만들고, 원본이 바뀌면 다른 캐시 버전을 만든다. 재설치 뒤 새 작업을 연다. 마켓플레이스 JSON이나 Codex 설정을 수동으로 고치지 않는다. 경로를 옮겼다면 새 경로를 `codex plugin marketplace add`로 등록하고 등록 결과의 루트를 확인한다.
+내용 해시가 버전의 build metadata에 들어가므로 같은 원본은 같은 패키지를 만들고, 원본이 바뀌면 다른 캐시 버전을 만든다. 재설치 뒤 새 작업을 연다. 마켓플레이스 JSON이나 Codex 설정을 수동으로 고치지 않는다.
+
+워크트리 이동으로 등록 경로가 바뀌면 기존 이름의 다른 출처를 덮어쓰는 `add`는 거부된다. 먼저 새 경로에서 빌드·검증을 완료하고 `codex plugin marketplace list --json`으로 이전 루트를 기록한다. `codex plugin marketplace remove my-agent-stack-local`로 이 등록만 제거한 뒤 새 루트에서 `codex plugin marketplace add ./dist/codex`와 위 재설치를 실행한다. 실패하면 기록한 이전 루트를 다시 등록해 복구한다. 다른 마켓플레이스는 변경하지 않는다.
 
 ## 복구와 제거
 

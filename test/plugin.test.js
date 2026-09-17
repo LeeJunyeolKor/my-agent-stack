@@ -4,6 +4,7 @@ import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { Script } from "node:vm";
 import { loadCatalog, repositoryRoot } from "../src/catalog.js";
 import { createPlan } from "../src/planner.js";
 import { applyPlan } from "../src/installer.js";
@@ -30,6 +31,34 @@ test("complete package is reproducible, reference-complete and isolated from run
   assert.deepEqual(result.created, ["dist/codex"]);
   assert.equal((await verifyPlugin(first)).ok, true);
   assert.deepEqual((await buildPlugin(first)).unchanged, ["dist/codex"]);
+});
+
+test("explanation asset installs with its shared instructions and packages identical bytes", async (t) => {
+  const root = await fixture(t);
+  const catalog = await loadCatalog(root);
+  const plan = await createPlan(catalog, {
+    agents: ["codex"], skills: ["code-explainer"], automations: [],
+    providers: { scm: "local-git", issues: "none" }, targetRoot: root
+  });
+  assert.deepEqual([...plan.profile.selection.skills].sort(), ["code-explainer", "technical-writing"]);
+  await applyPlan(plan);
+  const source = await readFile(path.join(root, "skills/code-explainer/assets/explainer.html"), "utf8");
+  assert.equal(await readFile(path.join(root, ".agents/skills/code-explainer/assets/explainer.html"), "utf8"), source);
+  const plugin = await createPluginPlan(catalog);
+  assert.equal(plugin.contents.get("plugins/my-agent-stack/skills/code-explainer/assets/explainer.html"), source);
+  const scripts = [...source.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+  assert.equal(scripts.length, 1);
+  new Script(scripts[0][1]); // Syntax only; browser and model behavior are separate checks.
+  await writeFile(path.join(root, "skills/code-explainer/assets/unexpected.js"), "void 0");
+  await assert.rejects(createPluginPlan(catalog), /allowlist/);
+});
+
+test("HTML references reject missing anchors, absent assets and package escapes", () => {
+  const file = "plugins/my-agent-stack/skills/code-explainer/assets/explainer.html";
+  validatePackageReferences(new Map([[file, '<a href="#flow">flow</a><section id="flow"></section>']]));
+  for (const html of ['<a href="#missing">bad</a>', '<img src="missing.svg">', '<a href="../../../../../outside.html">bad</a>']) {
+    assert.throws(() => validatePackageReferences(new Map([[file, html]])), /reference/);
+  }
 });
 
 test("source changes change cache identity and replacement requires explicit force", async (t) => {

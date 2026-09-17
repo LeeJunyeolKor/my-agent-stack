@@ -1,6 +1,6 @@
 {
   "name": "my-agent-stack",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "개인 에이전트 스킬과 자동화 레시피를 선택해 설치하는 이식 가능한 카탈로그.",
   "type": "module",
