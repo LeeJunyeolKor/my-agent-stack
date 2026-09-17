@@ -1,21 +1,23 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { loadCatalog, repositoryRoot } from "../src/catalog.js";
+import { loadCatalog } from "../src/catalog.js";
 
 test("catalog loads validated components and documented agents", async () => {
   const catalog = await loadCatalog();
 
   assert.equal(catalog.stack.version, "0.1.0");
   assert.deepEqual(catalog.skills.map((skill) => skill.id), [
+    "code-review",
     "commit",
     "environment-onboarding",
     "evidence-first-delivery",
     "fallback-guide",
     "portable-stack-audit",
     "pull-request",
+    "report-writing",
     "review-comment",
-    "terminology-review",
+    "technical-writing",
     "ticket-status"
   ]);
   assert.deepEqual(catalog.automations.map((automation) => automation.id), [
@@ -45,5 +47,4 @@ test("README catalog names every component", async () => {
   for (const component of [...catalog.skills, ...catalog.automations]) {
     assert.match(readme, new RegExp(`\\b${component.id}\\b`), `${component.id} is missing from README.md`);
   }
-  assert.equal(repositoryRoot.endsWith("my-agent-stack"), true);
 });

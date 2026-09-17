@@ -29,3 +29,15 @@ test("local denylist markers are supported without committing a mapping", async 
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test("linked worktree Git metadata is excluded from public payload scan", async () => {
+  const root = await mkdtemp(path.join(tmpdir(), "stack-worktree-safety-"));
+  try {
+    await writeFile(path.join(root, ".git"), ["gitdir: /", "Users", "/someone/private/repo/.git/worktrees/task"].join(""));
+    assert.deepEqual(await scanPublicSafety(root), []);
+    await writeFile(path.join(root, "reference.md"), ["/", "Users", "/someone/private"].join(""));
+    assert.equal((await scanPublicSafety(root))[0].rule, "absolute-user-path");
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});

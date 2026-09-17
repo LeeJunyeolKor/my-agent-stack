@@ -3,7 +3,9 @@
   "schemaVersion": 1,
   "stackVersion": "0.1.0",
   "scope": "project",
-  "agents": ["codex"],
+  "agents": [
+    "codex"
+  ],
   "providers": {
     "scm": "local-git",
     "issues": "none",
@@ -12,8 +14,12 @@
   "selection": {
     "skills": [
       "evidence-first-delivery",
-      "portable-stack-audit"
+      "portable-stack-audit",
+      "code-review",
+      "report-writing"
     ],
-    "automations": ["daily-work-summary"]
+    "automations": [
+      "daily-work-summary"
+    ]
   }
 }

@@ -29,6 +29,7 @@
     "maturity": {"enum": ["prototype", "recipe", "used", "verified"]},
     "visibility": {"enum": ["public", "sanitized-case-study", "private", "needs-review"]},
     "entrypoint": {"type": "string", "pattern": "^[^/]+\\.(?:md|MD)$"},
+    "dependencies": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
     "targets": {
       "type": "object",
       "additionalProperties": {"enum": ["verified", "unverified", "unsupported"]}

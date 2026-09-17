@@ -4,3 +4,4 @@ node_modules/
 .my-agent-stack-denylist
 coverage/
 *.log
+dist/

@@ -4,7 +4,7 @@ AI 에이전트와 함께 일할 때 사용하는 스킬, 자동화 레시피, �
 
 이 저장소는 개인 포트폴리오이면서 실제로 동작하는 선택형 설치 도구입니다. 반복 업무를 증거 범위가 명확한 재사용 가능한 에이전트 워크플로로 바꾸되, 핵심 구조가 특정 회사나 도구 공급자에 종속되지 않도록 설계한 방식을 보여줍니다.
 
-> 버전 0.1은 로컬 Agent Skills와 비활성화된 자동화 레시피를 설치합니다. 프로바이더 항목은 구성 선택지일 뿐 실제 커넥터가 아니며, 이 설치 도구는 어떤 레시피도 예약하거나 활성화하지 않습니다.
+> 버전 0.2는 선택형 Agent Skills 설치와 로컬 Codex 플러그인 빌드를 지원합니다. 자동화 레시피는 비활성 상태로만 복사합니다. 프로바이더 항목은 구성 선택지일 뿐 실제 커넥터가 아니며, 이 설치 도구는 어떤 레시피도 예약하거나 활성화하지 않습니다.
 
 <a id="what-this-demonstrates"></a>
 ## 이 저장소가 보여주는 것
@@ -30,8 +30,10 @@ AI 에이전트와 함께 일할 때 사용하는 스킬, 자동화 레시피, �
 | `commit` | 크거나 추측에 기반한 커밋을 검토하기 어려운 문제 | diff 기반 변경 묶음과 hook을 고려한 검증 |
 | `fallback-guide` | 기능 저하 상황에서 명시적인 운영 계약이 없는 문제 | 실패 조건, 관측 가능성, 검증 방식 |
 | `pull-request` | PR 설명이 실제 변경 사항과 달라지는 문제 | 증거에 근거한 변경 설명 |
-| `review-comment` | 리뷰 피드백에 결함과 선호가 뒤섞이는 문제 | 계약과 위험을 연결하는 판단, 최소 수정 제안 |
-| `terminology-review` | 용어 혼용으로 한국어 기술 문서의 가독성이 낮아지는 문제 | 맥락을 고려한 언어 일관성 |
+| `code-review` | 추측과 실제 결함이 섞이는 문제 | 리비전을 고정한 조사와 계약·영향 판단 |
+| `review-comment` | 리뷰 판단과 게시 절차가 섞이는 문제 | 의미를 보존하는 초안과 위치·중복 확인 |
+| `report-writing` | 부분 조회와 계획이 전체 실적으로 보이는 문제 | 집계 범위와 실행 결과를 구분한 보고 |
+| `technical-writing` | 문장을 줄이면서 조건과 의미가 사라지는 문제 | 독자 관점과 의미·용어 보존 |
 | `ticket-status` | 이슈 상태가 소스 제어 증거와 어긋나는 문제 | 특정 프로바이더에 종속되지 않는 상태 전이 판단 |
 
 <a id="automation-recipes"></a>
@@ -61,6 +63,8 @@ AI 에이전트와 함께 일할 때 사용하는 스킬, 자동화 레시피, �
 
 <a id="try-it"></a>
 ## 사용해 보기
+
+Codex에서 묶음으로 사용하려면 [플러그인 설치·업데이트·복구](docs/codex-plugin.md)를 따르세요. 선택형 CLI와 플러그인은 같은 `skills/`를 사용합니다. 동일 스킬을 양쪽으로 설치하면 호출이 겹칠 수 있으므로 한 방식을 선택합니다.
 
 Node.js 20 이상이 필요하며 별도의 패키지 의존성은 없습니다.
 
@@ -131,6 +135,8 @@ my-agent-stack plan --profile <profile.json> [--target <directory>]
 my-agent-stack install --profile <profile.json> --target <directory> --yes
 my-agent-stack validate
 my-agent-stack doctor
+my-agent-stack plugin-build [--dry-run | --yes] [--force]
+my-agent-stack plugin-verify
 ```
 
 `doctor`는 카탈로그 구조를 검증하고 공개 체크아웃에서 일반적인 비밀정보, 비공개 경로, 내부 도메인, 티켓 식별자 패턴을 검사합니다. 더 강한 로컬 검사가 필요하면 Git에서 무시되는 `.my-agent-stack-denylist`에 비공개 표식을 추가하세요.
@@ -138,6 +144,9 @@ my-agent-stack doctor
 <a id="design-documents"></a>
 ## 설계 문서
 
+- [Codex 플러그인 운영](docs/codex-plugin.md)
+- [스킬 역할·출처 판단](docs/skill-design.md)
+- [변경 기록](CHANGELOG.md)
 - [아키텍처](docs/architecture.md)
 - [이식성과 중립적 이름 규칙](docs/portability.md)
 - [보안 경계](docs/security.md)
@@ -149,7 +158,7 @@ my-agent-stack doctor
 
 - 독립적인 동작 검증을 기록하고, 증거가 확보된 대상의 호환성 상태만 선별적으로 높입니다.
 - 자격 증명을 저장하지 않는 선택형(opt-in) 프로바이더 어댑터를 추가합니다.
-- 공유 스킬 소스에서 에이전트별 플러그인 패키지를 생성합니다.
+- Codex 이외의 에이전트에 필요한 패키징 형식을 검토합니다.
 - 설치 미리 보기와 활성화를 분리하는 스케줄러 어댑터를 추가합니다.
 - 기계가 읽을 수 있는 카탈로그와 영수증을 My Workbench로 내보냅니다.
 
@@ -157,3 +166,14 @@ my-agent-stack doctor
 ## 라이선스
 
 MIT 라이선스를 따릅니다. 각 카탈로그 구성 요소도 `manifest.json`에 출처와 라이선스를 명시합니다.
+
+## 요청 예시
+
+- `$my-agent-stack:commit 커밋 메시지만 작성해줘` — diff를 읽어 초안만 작성합니다.
+- `$my-agent-stack:code-review 리뷰만 해줘` — 코드 수정이나 댓글 게시 없이 조사합니다.
+- `$my-agent-stack:review-comment 이 지적의 표현을 다듬어줘` — 이미 조사한 결론을 다듬습니다.
+- `$my-agent-stack:pull-request 티켓 없는 개인 프로젝트의 PR 초안을 작성해줘`
+- `$my-agent-stack:report-writing 일부 조회가 실패한 조사 결과를 보고서로 정리해줘`
+- `$my-agent-stack:technical-writing 조건과 수치를 보존하며 이 문서를 다듬어줘`
+
+Codex 플러그인의 한정된 이름을 사용하면 다른 플러그인의 유사 스킬과 구분하기 쉽습니다. 자연어만으로 호출했을 때 선택은 모델에 따라 달라질 수 있습니다. 기존 CLI에서는 `terminology-review`를 입력해도 `technical-writing`을 선택하며 경고합니다. 이전에 설치한 구형 폴더는 자동 삭제하지 않습니다.
