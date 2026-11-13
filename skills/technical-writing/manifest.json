@@ -4,7 +4,7 @@
   "kind": "skill",
   "id": "technical-writing",
   "name": "기술 문서 작성",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "summary": "조건·범위·확신 수준을 보존하며 한국어 기술 문서를 작성하고 다듬는다.",
   "maturity": "prototype",
   "visibility": "public",

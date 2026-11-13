@@ -1,6 +1,6 @@
 {
   "name": "my-agent-stack",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "근거 기반 개발·리뷰·문서 작성 스킬 모음",
   "author": {
     "name": "LeeJunyeolKor"
